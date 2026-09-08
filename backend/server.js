@@ -7,7 +7,7 @@ const mockStore = require('./services/mockStore');
 const apiRoutes = require('./routes/api');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.NODE_ENV === 'production' ? process.env.PORT : (process.env.PORT || 5000);
 
 // Security & Cross-Origin Configuration
 app.use(cors({
