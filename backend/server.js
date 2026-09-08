@@ -11,7 +11,19 @@ const PORT = process.env.PORT || 5000;
 
 // Security & Cross-Origin Configuration
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  origin: (origin, callback) => {
+    const allowed = [
+      /^https:\/\/.*\.vercel\.app$/,
+      'http://localhost:3000',
+      'http://127.0.0.1:3000'
+    ];
+    if (!origin) return callback(null, true);
+    const ok = allowed.some(p => {
+      if (typeof p === 'string') return p === origin;
+      return p.test(origin);
+    });
+    callback(ok ? null : new Error('Not allowed by CORS'), ok);
+  },
   credentials: true
 }));
 

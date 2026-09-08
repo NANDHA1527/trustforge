@@ -5,12 +5,16 @@ const nextConfig = {
     unoptimized: true
   },
   async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://localhost:5001/api/:path*'
-      }
-    ];
+    if (process.env.NODE_ENV === 'development') {
+      return [
+        {
+          source: '/api/:path*',
+          destination: 'http://localhost:5001/api/:path*'
+        }
+      ];
+    }
+    // In production the Vercel vercel.json rewrites handle routing
+    return [];
   }
 };
 
