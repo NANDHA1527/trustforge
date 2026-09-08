@@ -72,4 +72,10 @@ const startServer = async () => {
   });
 };
 
-startServer();
+// Export the Express app for Vercel
+module.exports = app;
+
+// Only start the server when this file is executed directly (local dev)
+if (require.main === module) {
+  startServer();
+}
